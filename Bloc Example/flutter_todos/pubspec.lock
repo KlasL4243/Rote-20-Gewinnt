@@ -36,16 +36,18 @@ packages:
   bloc:
     dependency: "direct main"
     description:
-      path: "../../packages/bloc"
-      relative: true
-    source: path
+      name: bloc
+      sha256: "106842ad6569f0b60297619e9e0b1885c2fb9bf84812935490e6c5275777804e"
+      url: "https://pub.dev"
+    source: hosted
     version: "8.1.4"
   bloc_test:
     dependency: "direct dev"
     description:
-      path: "../../packages/bloc_test"
-      relative: true
-    source: path
+      name: bloc_test
+      sha256: "165a6ec950d9252ebe36dc5335f2e6eb13055f33d56db0eeb7642768849b43d2"
+      url: "https://pub.dev"
+    source: hosted
     version: "9.1.7"
   boolean_selector:
     dependency: transitive
@@ -151,9 +153,10 @@ packages:
   flutter_bloc:
     dependency: "direct main"
     description:
-      path: "../../packages/flutter_bloc"
-      relative: true
-    source: path
+      name: flutter_bloc
+      sha256: f0ecf6e6eb955193ca60af2d5ca39565a86b8a142452c5b24d96fb477428f4d2
+      url: "https://pub.dev"
+    source: hosted
     version: "8.1.5"
   flutter_localizations:
     dependency: "direct main"
