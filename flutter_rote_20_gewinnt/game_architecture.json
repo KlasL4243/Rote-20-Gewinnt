@@ -1,0 +1,43 @@
+{
+    "game_name": "",
+    "game_uuid": "",
+    "start_time": "",
+    "finished": false,
+    "rules": {
+        "points": {
+            "round_win": 1,
+            "bet_win": 10,
+            "bet_lose": -5
+        },
+        "max_cards": 7
+    },
+    "rounds": [
+        {
+            "round_id": 0, 
+            "card_number": 1, 
+            "data": {
+                "player1": { "bet": 1, "wins": 0, "score": -5},
+                "player2": { "bet": 0, "wins": 0, "score": 10 },
+                "player3": { "bet": 0, "wins": 1, "score": -5 }
+            }
+        },
+        {
+            "round_id": 1, 
+            "card_number": 2, 
+            "data": {
+                "player1": { "bet": 1, "wins": 1, "score": 6 },
+                "player2": { "bet": 1, "wins": 1, "score": 21 },
+                "player3": { "bet": 0, "wins": 0, "score": 5 }
+            }
+        },
+        {
+            "round_id": 2, 
+            "card_number": 3, 
+            "data": {
+                "player1": { "bet": null, "wins": null, "score": 6 },
+                "player2": { "bet": null, "wins": null, "score": 21 },
+                "player3": { "bet": null, "wins": null, "score": 5 }
+            }
+        }
+    ]
+}
