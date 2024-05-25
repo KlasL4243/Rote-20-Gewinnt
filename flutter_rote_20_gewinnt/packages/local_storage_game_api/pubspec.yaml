@@ -1,0 +1,21 @@
+name: local_storage_game_api
+description: "" #TODO: add description
+version: 1.0.0+1
+publish_to: none
+
+environment:
+  sdk: ">=3.4.1 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  
+  rxdart: ^0.27.5
+  shared_preferences: ^2.0.15
+  game_api:
+    path: ../game_api
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  mocktail: ^1.0.0

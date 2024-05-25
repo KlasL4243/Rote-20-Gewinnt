@@ -1,0 +1,23 @@
+{
+	"folders": [
+		{
+			"name": "packages",
+			"path": "flutter_rote_20_gewinnt/packages"
+		},
+		{
+			"name": "packages",
+			"path": "flutter_todos/packages"
+		},
+		{
+			"name": "lib",
+			"path": "flutter_rote_20_gewinnt/lib"
+		},
+		{
+			"name": "lib",
+			"path": "flutter_todos/lib"
+		},
+		{
+			"path": "."
+		}
+	]
+}
