@@ -1,0 +1,6 @@
+open:
+  addFeature:
+    addPlayerMidgame
+    pausePlayerMidgame
+  development:
+    useSharedPreferencesSetStringList
