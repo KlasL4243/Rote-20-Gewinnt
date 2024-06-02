@@ -1,0 +1,21 @@
+{
+	"folders": [
+		{
+			"name": "EMA-2024s",
+			"path": "../EMA-2024s"
+		},
+		{
+			"name": "example_flutter_todos",
+			"path": "../EMA-2024s/example_flutter_todos"
+		},
+		{
+			"name": "flutter_rote_20_gewinnt",
+			"path": "../../Local/flutter_rote_20_gewinnt"
+		}
+	],
+	"settings": {
+		"files.eol": "\n",
+		"terminal.integrated.splitCwd": "workspaceRoot"
+
+	}
+}

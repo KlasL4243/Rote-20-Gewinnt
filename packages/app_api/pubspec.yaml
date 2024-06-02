@@ -1,4 +1,4 @@
-name: login_api
+name: app_api
 description: "TODO: add description"
 version: 0.0.1+1
 homepage:
@@ -11,7 +11,7 @@ dependencies:
   flutter:
     sdk: flutter
   json_annotation: ^4.9.0
-  meta: ^1.12.0
+  #meta: ^1.12.0
   uuid: ^3.0.7
 
 dev_dependencies:

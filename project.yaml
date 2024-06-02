@@ -1,10 +1,53 @@
 open:
+  ui:
+    - figma w/ material3?
+    home-page:
+      componets:
+        - navigationBar
+        - topAppBar?
+        - menu
+        - Progress indicators?
+        - undo snackBar
+
+      pages:
+        - new game
+        - history
+        - stats
+        - settings:
+          - change language: 
+            - example: https://github.com/AnasSafi/flutter_localization_example
+            - language flag button
+
+    game:
+      players:
+        - List:
+          - Dividers?
+          - onClick:
+            - Dialog?
+          - TextField
+      navbar:
+        - bets
+        - wins
+        - scores
+      (extended?) fab:
+        - edit:
+          page:
+            - dropdown page selector to edit older pages
+            - add players:
+              - score: average of everyone?
+            - remove player
+          fab:
+            - cancel
+            - confirm
+        - next
+
+
   storage:
     remote:
       - firestore
     local:
       - shared_preferences
-      - database?
+      - database
   
   authentification:
     - firebase auth
@@ -13,6 +56,7 @@ open:
     get_players:
       manally:
         - String entrys
+        - Choose from Contacts (idea from Nathan)
       automatically:
         - link share via social
         - qr-code on-screen
