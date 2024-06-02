@@ -1,4 +1,6 @@
-arb-dir: assets/l10n/
-template-arb-file: intl_en.arb
+#arb-dir: lib/l10n/ # commented because using default
+#template-arb-file: intl_en.arb # # commented because using default
+output_dir: lib/l10n/
 output-localization-file: app_localizations.dart
 nullable-getter: false
+synthetic-package: false
