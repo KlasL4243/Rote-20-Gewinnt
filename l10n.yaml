@@ -1,0 +1,6 @@
+// source: https://github.com/flutter/news_toolkit/blob/main/flutter_news_example/l10n.yaml
+
+arb-dir: lib/l10n/arb
+template-arb-file: app_en.arb
+output-localization-file: app_localizations.dart
+nullable-getter: false
