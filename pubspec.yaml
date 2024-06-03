@@ -1,0 +1,24 @@
+name: rote20_gewinnt
+description: "TODO: add desription"
+publish_to: 'none'
+version: 0.1.0+1
+
+environment:
+  sdk: '>=3.4.1 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  flutter_lints: ^3.0.0
+  # flutter_test:
+  #   sdk: flutter
+
+flutter:
+  uses-material-design: true
+  generate: true
+
+flutter_intl:
+  enabled: true
+  output_dir: lib/l10n
