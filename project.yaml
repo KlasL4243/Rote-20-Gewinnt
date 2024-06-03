@@ -1,0 +1,87 @@
+open:
+  ui:
+    - figma w/ material3?
+    home-page:
+      componets:
+        - navigationBar
+        - topAppBar?
+        - menu
+        - Progress indicators?
+        - undo snackBar
+
+      pages:
+        - new game
+        - history
+        - stats
+        - settings:
+          - change language: 
+            - example: https://github.com/AnasSafi/flutter_localization_example
+            - language flag button
+
+    game:
+      players:
+        - List:
+          - Dividers?
+          - onClick:
+            - Dialog?
+          - TextField
+      navbar:
+        - bets
+        - wins
+        - scores
+      (extended?) fab:
+        - edit:
+          page:
+            - dropdown page selector to edit older pages
+            - add players:
+              - score: average of everyone?
+            - remove player
+          fab:
+            - cancel
+            - confirm
+        - next
+
+
+  storage:
+    remote:
+      - firestore
+    local:
+      - shared_preferences
+      - database
+  
+  authentification:
+    - firebase auth
+
+  game:
+    get_players:
+      manally:
+        - String entrys
+        - Choose from Contacts (idea from Nathan)
+      automatically:
+        - link share via social
+        - qr-code on-screen
+        - invite friends in-app
+
+  platforms:
+    web:
+      github pages:
+        - klasl4243.github.io/rote20_gewinnt
+        - enforce https
+      domain:
+        - dorfserver.com
+        - rote20-gewinnt.de?
+
+    android:
+      playstore:
+        - deploy to playstore
+        - register developer account
+    
+    ios:
+      appstore:
+        - deploy to appstore
+        - register developer account
+
+  github:
+    - secrets:
+      - key files
+      - environment variables
