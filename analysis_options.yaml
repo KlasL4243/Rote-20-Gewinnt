@@ -7,11 +7,11 @@ linter:
     - always_declare_return_types
     - always_put_control_body_on_new_line
     # - always_put_required_named_parameters_first # in the same order as fields
-    - always_specify_types
+    # - always_specify_types
     - always_use_package_imports
     - annotate_overrides
     - annotate_redeclares
-    # - avoid_annotating_with_dynamic # conflicts with always_specify_types
+    - avoid_annotating_with_dynamic # conflicts with always_specify_types
     - avoid_bool_literals_in_conditional_expressions
     # - avoid_catches_without_on_clauses
     # - avoid_catching_errors
@@ -77,7 +77,7 @@ linter:
     - eol_at_end_of_file
     - exhaustive_cases
     - file_names
-    - flutter_style_todos
+    # - flutter_style_todos
     - hash_and_equals
     - implementation_imports
     - implicit_call_tearoffs
@@ -128,7 +128,7 @@ linter:
     - prefer_constructors_over_static_methods
     - prefer_contains
     # - prefer_double_quotes
-    - prefer_expression_function_bodies
+    # - prefer_expression_function_bodies
     - prefer_final_fields
     - prefer_final_in_for_each
     - prefer_final_locals
@@ -156,7 +156,7 @@ linter:
     - prefer_typing_uninitialized_variables
     - prefer_void_to_null
     - provide_deprecation_message
-    - public_member_api_docs
+    # - public_member_api_docs
     - recursive_getters
     - require_trailing_commas
     - secure_pubspec_urls
