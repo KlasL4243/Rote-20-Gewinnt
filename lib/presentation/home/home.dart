@@ -20,7 +20,7 @@ class Home extends StatelessWidget {
             children: [
               HomeCard(
                 text: "Neues Spiel",
-                widget: () => const NothingHere(),
+                widget: () => const Names(),
               ),
               HomeCard(
                 text: "Spielverlauf",
