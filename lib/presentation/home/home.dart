@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:rote20_gewinnt/presentation/settings/settings.dart';
 import 'package:rote20_gewinnt/presentation/home/home_card.dart';
-import 'package:rote20_gewinnt/presentation/home/nothing_here.dart';
-import 'package:rote20_gewinnt/presentation/names/names.dart';
 
 class Home extends StatelessWidget {
   const Home({super.key});
@@ -20,19 +19,13 @@ class Home extends StatelessWidget {
             children: [
               HomeCard(
                 text: "Neues Spiel",
-                widget: () => const Names(),
+                widget: () => Settings(),
               ),
-              HomeCard(
+              const HomeCard(
                 text: "Spielverlauf",
-                widget: () => const NothingHere(),
               ),
-              HomeCard(
+              const HomeCard(
                 text: "Anleitung",
-                widget: () => const NothingHere(),
-              ),
-              HomeCard(
-                text: "Einstellungen",
-                widget: () => const NothingHere(),
               ),
             ],
           ),

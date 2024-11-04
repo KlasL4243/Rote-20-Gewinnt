@@ -2,11 +2,17 @@
 
 import 'dart:io';
 
+import 'package:json_annotation/json_annotation.dart';
 import 'package:rote20_gewinnt/data/game/game_base.dart';
 import 'package:rote20_gewinnt/data/game/round.dart';
+import 'package:rote20_gewinnt/data/json_map.dart';
 
+part 'game.g.dart';
+
+@JsonSerializable(explicitToJson: true)
 class Game extends GameBase {
   Game({
+    required super.name,
     required super.maxCards,
     required super.onWin,
     required super.onLoose,
@@ -15,6 +21,11 @@ class Game extends GameBase {
   }) {
     setCardCounts();
   }
+
+  Game.empty() : super.empty();
+
+  factory Game.fromJson(JsonMap json) => _$GameFromJson(json);
+  JsonMap toJson() => _$GameToJson(this);
 
   void setCardCounts() {
     cardCounts = [
@@ -57,23 +68,26 @@ class Game extends GameBase {
 
   @override
   void setWins(RoundData wins) {
-    final oldScores = data.lastOrNull?.scores;
+    final oldScores = currentRound != 0 ? data[currentRound - 1].scores : null;
     final round = data[currentRound];
 
-    round.wins = wins;
-    round.scores = RoundData.fromIterable(sortedPlayers, value: (player) {
+    int getPlayerScore(player) {
       final bet = round.bets[player]!;
       final wins = round.wins[player]!;
       final oldScore = oldScores?[player] ?? 0;
 
       return oldScore + wins + (bet == wins ? onWin : onLoose);
-    });
+    }
+
+    round.wins = wins;
+    round.scores = RoundData.fromIterable(sortedPlayers, value: getPlayerScore);
   }
 }
 
 void main() {
   final players = ["lukas", "mirjam", "maik"];
   final game = Game(
+    name: "name",
     maxCards: 10,
     players: players,
     onWin: 10,

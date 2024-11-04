@@ -4,6 +4,7 @@ import 'package:rote20_gewinnt/data/game/round.dart';
 
 abstract class GameBase {
   GameBase({
+    required this.name,
     required this.maxCards,
     required this.onWin,
     required this.onLoose,
@@ -11,11 +12,14 @@ abstract class GameBase {
     required this.players,
   });
 
-  int maxCards; // default: 7
-  int onWin; // default: 10
-  int onLoose; // default: -5
-  int onRoundWin; // default: 1
-  List<String> players;
+  GameBase.empty();
+
+  late String name;
+  late int maxCards; // default: 7
+  late int onWin; // default: 10
+  late int onLoose; // default: -5
+  late int onRoundWin; // default: 1
+  List<String> players = [];
 
   List<Round> data = [];
   int currentRound = -1;
