@@ -5,31 +5,36 @@ class NumberFormField extends StatelessWidget {
   const NumberFormField({
     super.key,
     required this.labelText,
-    this.initialValue,
     required this.onSaved,
-    required this.validator,
+    this.initialValue,
+    this.validator,
+    this.inputFormatters,
   });
 
   final String labelText;
   final String? initialValue;
   final void Function(String?) onSaved;
-  final FormFieldValidator<int> validator;
+  final FormFieldValidator<String>? validator;
+  final List<TextInputFormatter>? inputFormatters;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       decoration: InputDecoration(
-        labelText: labelText,
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(5),
+        ),
       ),
       keyboardType: TextInputType.number,
-      inputFormatters: [
-        FilteringTextInputFormatter.digitsOnly,
-      ],
+      inputFormatters: inputFormatters,
       initialValue: initialValue,
       onSaved: onSaved,
       validator: (String? value) {
-        if (value == null || value.isEmpty) return "Keine valide Zahl";
-        return validator(int.parse(value));
+        if (value == null || value.isEmpty)
+          return "Bitte geben sie eine Zahl ein";
+        if (value == "-") return "Keine valide Zahl";
+        if (validator == null) return null;
+        return validator!(value);
       },
     );
   }
