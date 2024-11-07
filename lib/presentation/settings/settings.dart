@@ -43,6 +43,16 @@ class _SettingsState extends State<Settings> {
       );
     }
 
+    String getUnusedGameName() {
+      final names = Manager.getSavedGameNames();
+      int i = 1;
+      String name = "";
+      while (true) {
+        name = "spiel$i";
+        if (!names.contains(name)) return name;
+      }
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: const Text("Einstellungen"),
@@ -85,6 +95,7 @@ class _SettingsState extends State<Settings> {
                             borderRadius: BorderRadius.circular(5),
                           ),
                         ),
+                        initialValue: getUnusedGameName(),
                         onSaved: (String? value) {
                           Manager.game.name = value!;
                           log("name saved!");
