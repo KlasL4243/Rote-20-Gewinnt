@@ -10,6 +10,7 @@ class Names extends StatefulWidget {
   const Names({super.key});
 
   static int playerCount = 12;
+  static int playerMinCount = 4;
 
   @override
   State<Names> createState() => _NamesState();
@@ -66,6 +67,7 @@ class _NamesState extends State<Names> {
                   border: const OutlineInputBorder(),
                   hintText: "spieler$i",
                 ),
+                initialValue: Manager.game.players.elementAtOrNull(i),
                 textInputAction: i == (Names.playerCount - 1)
                     ? TextInputAction.done
                     : TextInputAction.next,
