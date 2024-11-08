@@ -6,9 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:rote20_gewinnt/data/game/game.dart';
 import 'package:rote20_gewinnt/data/manager/manager.dart';
-import 'package:rote20_gewinnt/presentation/home/home_card.dart';
 import 'package:rote20_gewinnt/presentation/names/names.dart';
-import 'package:rote20_gewinnt/presentation/names/number_form_field.dart';
+import 'package:rote20_gewinnt/presentation/settings/number_form_field.dart';
 import 'package:rote20_gewinnt/presentation/settings/entry_row.dart';
 
 String? intValidator(String? value) {

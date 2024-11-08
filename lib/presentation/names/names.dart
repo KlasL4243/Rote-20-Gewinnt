@@ -3,7 +3,6 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:rote20_gewinnt/data/manager/manager.dart';
 import 'package:rote20_gewinnt/presentation/home/nothing_here.dart';
-import 'package:rote20_gewinnt/presentation/settings/settings.dart';
 
 const textScaler = TextScaler.linear(2);
 
