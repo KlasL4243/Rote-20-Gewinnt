@@ -57,6 +57,7 @@ class _SettingsState extends State<Settings> {
         title: const Text("Einstellungen"),
       ),
       floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.lightBlue,
         onPressed: () {
           final state = _formKey.currentState!;
           if (!state.validate()) {

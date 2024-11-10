@@ -31,28 +31,24 @@ class _NamesState extends State<Names> {
       );
     }
 
+    void validateAndSaveForm() {
+      Manager.game.players = [for (int i = 0; i < Names.playerCount; i++) "-"];
+      final FormState state = _formKey.currentState!;
+      state.save();
+
+      if (!state.validate()) return;
+
+      Manager.game.players.removeWhere((element) => element == "-");
+      goToSettings();
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: const Text("Namen"),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Manager.game.players = [
-            for (int i = 0; i < Names.playerCount; i++) "-"
-          ];
-          final state = _formKey.currentState!;
-          state.save();
-
-          log(Manager.game.players.toString());
-          if (!state.validate()) {
-            log("NamesForm not valide!");
-            return;
-          }
-          log("NamesForm saved!");
-          Manager.game.players.removeWhere((element) => element == "-");
-          log(Manager.game.players.toString());
-          goToSettings();
-        },
+        backgroundColor: Colors.lightBlue,
+        onPressed: validateAndSaveForm,
         child: const Icon(Icons.check),
       ),
       body: Form(
@@ -62,26 +58,7 @@ class _NamesState extends State<Names> {
           semanticChildCount: Names.playerCount,
           children: [
             for (int i = 0; i < Names.playerCount; i++) ...[
-              TextFormField(
-                decoration: InputDecoration(
-                  border: const OutlineInputBorder(),
-                  hintText: "spieler$i",
-                ),
-                initialValue: Manager.game.players.elementAtOrNull(i),
-                textInputAction: i == (Names.playerCount - 1)
-                    ? TextInputAction.done
-                    : TextInputAction.next,
-                onSaved: (String? value) {
-                  if (value!.isEmpty) return;
-                  Manager.game.players[i] = value;
-                  log("name$i saved!");
-                },
-                validator: (String? name) => (name!.isEmpty)
-                    ? null
-                    : (Manager.game.players.take(i).contains(name))
-                        ? "Der Name ist bereits vergeben!"
-                        : null,
-              ),
+              nameFormField(i),
               const SizedBox(height: 5),
             ],
           ],
@@ -89,4 +66,29 @@ class _NamesState extends State<Names> {
       ),
     );
   }
+}
+
+TextFormField nameFormField(int index) {
+  return TextFormField(
+    decoration: InputDecoration(
+      filled: true,
+      fillColor: Colors.lightBlue[100],
+      border: const OutlineInputBorder(),
+      hintText: "Spieler ${index + 1}",
+    ),
+    initialValue: Manager.game.players.elementAtOrNull(index),
+    textInputAction: index == (Names.playerCount - 1)
+        ? TextInputAction.done
+        : TextInputAction.next,
+    onSaved: (String? value) {
+      if (value!.isEmpty) return;
+      Manager.game.players[index] = value;
+      log("name$index saved!");
+    },
+    validator: (String? name) => (name == null || name.isEmpty)
+        ? null
+        : (Manager.game.players.take(index).contains(name))
+            ? "Der Name ist bereits vergeben!"
+            : null,
+  );
 }
