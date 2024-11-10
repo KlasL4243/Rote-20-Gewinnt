@@ -16,6 +16,16 @@ String? intValidator(String? value) {
   return null;
 }
 
+String getUnusedGameName() {
+  final names = Manager.getSavedGameNames();
+  int i = 1;
+  String name = "";
+  while (true) {
+    name = "spiel$i";
+    if (!names.contains(name)) return name;
+  }
+}
+
 class Settings extends StatefulWidget {
   Settings({super.key}) {
     init();
@@ -40,16 +50,6 @@ class _SettingsState extends State<Settings> {
           },
         ),
       );
-    }
-
-    String getUnusedGameName() {
-      final names = Manager.getSavedGameNames();
-      int i = 1;
-      String name = "";
-      while (true) {
-        name = "spiel$i";
-        if (!names.contains(name)) return name;
-      }
     }
 
     return Scaffold(
@@ -86,49 +86,9 @@ class _SettingsState extends State<Settings> {
                 ),
                 child: Column(
                   children: [
-                    EntryRow(
-                      text: "SpielName",
-                      formField: TextFormField(
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(5),
-                          ),
-                        ),
-                        initialValue: getUnusedGameName(),
-                        onSaved: (String? value) {
-                          Manager.game.name = value!;
-                          log("name saved!");
-                        },
-                        validator: (String? name) =>
-                            (name == null || name.isEmpty)
-                                ? "Bitte gib einen Namen ein"
-                                : (Manager.getSavedGameNames().contains(name))
-                                    ? "Der Name ist bereits vergeben!"
-                                    : null,
-                      ),
-                    ),
+                    spielNameRow(),
                     Divider(),
-                    EntryRow(
-                      text: "maxCards",
-                      formField: NumberFormField(
-                        labelText: "maxCards",
-                        initialValue: "7",
-                        onSaved: (String? value) {
-                          Manager.game.maxCards = int.parse(value!);
-                          log("name saved!");
-                        },
-                        validator: (String? value) {
-                          if (value == null || value.isEmpty)
-                            return "Keine valide Zahl";
-                          if (int.parse(value) < 0) return "Zahl zu klein";
-                          return null;
-                        },
-                        inputFormatters: [
-                          LengthLimitingTextInputFormatter(2),
-                          FilteringTextInputFormatter.digitsOnly,
-                        ],
-                      ),
-                    ),
+                    maxCardsRow(),
                   ],
                 ),
               ),
@@ -142,105 +102,106 @@ class _SettingsState extends State<Settings> {
                 ),
                 child: Column(
                   children: [
-                    EntryRow(
-                      text: "onWin",
-                      formField: NumberFormField(
-                        labelText: "onWin",
-                        initialValue: "10",
-                        onSaved: (String? value) {
-                          Manager.game.onWin = int.parse(value!);
-                          log("onWin saved!");
-                        },
-                      ),
-                    ),
+                    onWinRow(),
                     Divider(),
-                    EntryRow(
-                      text: "onLoose",
-                      formField: NumberFormField(
-                        labelText: "onLoose",
-                        initialValue: "-5",
-                        onSaved: (String? value) {
-                          Manager.game.onLoose = int.parse(value!);
-                          log("onLoose saved!");
-                        },
-                      ),
-                    ),
+                    onLooseRow(),
                     Divider(),
-                    EntryRow(
-                      text: "onRoundWin",
-                      formField: NumberFormField(
-                        labelText: "onRoundWin",
-                        initialValue: "1",
-                        onSaved: (String? value) {
-                          Manager.game.onRoundWin = int.parse(value!);
-                          log("onRoundWin saved!");
-                        },
-                      ),
-                    )
+                    onRoundWinRow()
                   ],
                 ),
               ),
             ],
           ),
         ),
-        // child: ListView(
-        //   children: [
-        //     TextFormField(
-        //       decoration: const InputDecoration(
-        //         border: OutlineInputBorder(),
-        //         labelText: "Spielname",
-        //       ),
-        //       initialValue: "spiel_01",
-        //       onSaved: (String? value) {
-        //         Manager.game.name = value!;
-        //         log("name saved!");
-        //       },
-        //       validator: (String? name) => (name == null || name.isEmpty)
-        //           ? "Bitte gib einen Namen ein"
-        //           : (Manager.getSavedGameNames().contains(name))
-        //               ? "Der Name ist bereits vergeben!"
-        //               : null,
-        //     ),
-        //     NumberFormField(
-        //       labelText: "maxCards",
-        //       initialValue: "7",
-        //       onSaved: (String? value) {
-        //         Manager.game.maxCards = int.parse(value!);
-        //         log("name saved!");
-        //       },
-        //       validator: (String? value) {
-        //         if (value == null || value.isEmpty) return "Keine valide Zahl";
-        //         if (int.parse(value) < 0) return "Zahl zu klein";
-        //         return null;
-        //       },
-        //     ),
-        //     NumberFormField(
-        //       labelText: "onWin",
-        //       initialValue: "10",
-        //       onSaved: (String? value) {
-        //         Manager.game.onWin = int.parse(value!);
-        //         log("onWin saved!");
-        //       },
-        //     ),
-        //     NumberFormField(
-        //       labelText: "onLoose",
-        //       initialValue: "-5",
-        //       onSaved: (String? value) {
-        //         Manager.game.onLoose = int.parse(value!);
-        //         log("onLoose saved!");
-        //       },
-        //     ),
-        //     NumberFormField(
-        //       labelText: "onRoundWin",
-        //       initialValue: "1",
-        //       onSaved: (String? value) {
-        //         Manager.game.onRoundWin = int.parse(value!);
-        //         log("onRoundWin saved!");
-        //       },
-        //     ),
-        //   ],
-        // ),
       ),
     );
   }
+}
+
+EntryRow spielNameRow() {
+  return EntryRow(
+    text: "SpielName",
+    formField: TextFormField(
+      decoration: InputDecoration(
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(5),
+        ),
+      ),
+      initialValue: getUnusedGameName(),
+      onSaved: (String? value) {
+        Manager.game.name = value!;
+        log("name saved!");
+      },
+      validator: (String? name) => (name == null || name.isEmpty)
+          ? "Bitte gib einen Namen ein"
+          : (Manager.getSavedGameNames().contains(name))
+              ? "Der Name ist bereits vergeben!"
+              : null,
+    ),
+  );
+}
+
+EntryRow maxCardsRow() {
+  return EntryRow(
+    text: "maxCards",
+    formField: NumberFormField(
+      labelText: "maxCards",
+      initialValue: "7",
+      onSaved: (String? value) {
+        Manager.game.maxCards = int.parse(value!);
+        log("name saved!");
+      },
+      validator: (String? value) {
+        if (value == null || value.isEmpty) return "Keine valide Zahl";
+        if (int.parse(value) < 0) return "Zahl zu klein";
+        return null;
+      },
+      inputFormatters: [
+        LengthLimitingTextInputFormatter(2),
+        FilteringTextInputFormatter.digitsOnly,
+      ],
+    ),
+  );
+}
+
+EntryRow onWinRow() {
+  return EntryRow(
+    text: "onWin",
+    formField: NumberFormField(
+      labelText: "onWin",
+      initialValue: "10",
+      onSaved: (String? value) {
+        Manager.game.onWin = int.parse(value!);
+        log("onWin saved!");
+      },
+    ),
+  );
+}
+
+EntryRow onLooseRow() {
+  return EntryRow(
+    text: "onLoose",
+    formField: NumberFormField(
+      labelText: "onLoose",
+      initialValue: "-5",
+      onSaved: (String? value) {
+        Manager.game.onLoose = int.parse(value!);
+        log("onLoose saved!");
+      },
+    ),
+  );
+}
+
+EntryRow onRoundWinRow() {
+  return EntryRow(
+    text: "onRoundWin",
+    formField: NumberFormField(
+      labelText: "onRoundWin",
+      initialValue: "1",
+      onSaved: (String? value) {
+        Manager.game.onRoundWin = int.parse(value!);
+        log("onRoundWin saved!");
+      },
+    ),
+  );
 }
