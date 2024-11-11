@@ -32,7 +32,7 @@ class _NamesState extends State<Names> {
     }
 
     void validateAndSaveForm() {
-      Manager.game.players = [for (int i = 0; i < Names.playerCount; i++) "-"];
+      Manager.game.players = List.generate(Names.playerCount, (_) => "-");
       final FormState state = _formKey.currentState!;
       state.save();
 
