@@ -56,7 +56,8 @@ class _SettingsState extends State<Settings> {
       appBar: AppBar(
         title: const Text("Einstellungen"),
       ),
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: FloatingActionButton.extended(
+        label: Text("Weiter"),
         backgroundColor: Colors.lightBlue,
         onPressed: () {
           final state = _formKey.currentState!;
@@ -69,7 +70,7 @@ class _SettingsState extends State<Settings> {
           log("SettingsForm saved!");
           goToNames();
         },
-        child: const Icon(Icons.check),
+        icon: const Icon(Icons.arrow_forward),
       ),
       body: Form(
         key: _formKey,

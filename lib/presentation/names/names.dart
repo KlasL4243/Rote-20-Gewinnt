@@ -46,10 +46,11 @@ class _NamesState extends State<Names> {
       appBar: AppBar(
         title: const Text("Namen"),
       ),
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: FloatingActionButton.extended(
+        label: const Text("Fertig"),
         backgroundColor: Colors.lightBlue,
         onPressed: validateAndSaveForm,
-        child: const Icon(Icons.check),
+        icon: const Icon(Icons.check),
       ),
       body: Form(
         key: _formKey,
