@@ -147,7 +147,6 @@ EntryRow maxCardsRow() {
   return EntryRow(
     text: "maxCards",
     formField: NumberFormField(
-      labelText: "maxCards",
       initialValue: "7",
       onSaved: (String? value) {
         Manager.game.maxCards = int.parse(value!);
@@ -170,7 +169,6 @@ EntryRow onWinRow() {
   return EntryRow(
     text: "onWin",
     formField: NumberFormField(
-      labelText: "onWin",
       initialValue: "10",
       onSaved: (String? value) {
         Manager.game.onWin = int.parse(value!);
@@ -184,7 +182,6 @@ EntryRow onLooseRow() {
   return EntryRow(
     text: "onLoose",
     formField: NumberFormField(
-      labelText: "onLoose",
       initialValue: "-5",
       onSaved: (String? value) {
         Manager.game.onLoose = int.parse(value!);
@@ -198,7 +195,6 @@ EntryRow onRoundWinRow() {
   return EntryRow(
     text: "onRoundWin",
     formField: NumberFormField(
-      labelText: "onRoundWin",
       initialValue: "1",
       onSaved: (String? value) {
         Manager.game.onRoundWin = int.parse(value!);

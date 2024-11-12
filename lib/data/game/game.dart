@@ -1,7 +1,5 @@
 // ignore_for_file: avoid_print
 
-import 'dart:io';
-
 import 'package:json_annotation/json_annotation.dart';
 import 'package:rote20_gewinnt/data/game/game_base.dart';
 import 'package:rote20_gewinnt/data/game/round.dart';
@@ -35,21 +33,21 @@ class Game extends GameBase {
   }
 
   @override
-  int getCurrentCardMax() => cardCounts[currentRound];
-
-  @override
-  RoundData getCurrentScores() => data[currentRound].scores;
+  int getCurrentCardMax() => cardCounts[currentIndex];
 
   @override
   bool goNextRound() {
-    if (currentRound == cardCounts.length) return false;
-    currentRound++;
+    if (currentIndex == cardCounts.length) return false;
+    currentIndex++;
+    currentBets = RoundData();
+    currentWins = RoundData();
+
     return true;
   }
 
   @override
   List<String> getSortedPlayers() {
-    final shiftIndex = (currentRound) % players.length;
+    final shiftIndex = (currentIndex) % players.length;
 
     sortedPlayers = [
       ...players.skip(shiftIndex),
@@ -60,57 +58,27 @@ class Game extends GameBase {
   }
 
   @override
-  void setBets(RoundData bets) {
-    final round = Round();
-    round.bets = bets;
-    data.add(round);
+  void setBet(String player, int bet) {
+    currentBets[player] = bet;
   }
 
   @override
-  void setWins(RoundData wins) {
-    final oldScores = currentRound != 0 ? data[currentRound - 1].scores : null;
-    final round = data[currentRound];
+  void setWin(String player, int wins) {
+    currentWins[player] = wins;
+  }
 
-    int getPlayerScore(player) {
-      final bet = round.bets[player]!;
-      final wins = round.wins[player]!;
-      final oldScore = oldScores?[player] ?? 0;
-
-      return oldScore + wins + (bet == wins ? onWin : onLoose);
+  @override
+  RoundData getCurrentScores() {
+    int calculateScore(player) {
+      final bet = currentBets[player]!;
+      final wins = currentWins[player]!;
+      final lastScore = lastScores?[player] ?? 0;
+      return lastScore + wins + (bet == wins ? onWin : onLoose);
     }
 
-    round.wins = wins;
-    round.scores = RoundData.fromIterable(sortedPlayers, value: getPlayerScore);
-  }
-}
+    lastScores = RoundData.fromIterable(sortedPlayers, value: calculateScore);
+    data.add(Round(bets: currentBets, wins: currentWins, scores: lastScores!));
 
-void main() {
-  final players = ["lukas", "mirjam", "maik"];
-  final game = Game(
-    name: "name",
-    maxCards: 10,
-    players: players,
-    onWin: 10,
-    onLoose: -5,
-    onRoundWin: 1,
-  );
-
-  while (game.goNextRound()) {
-    final playerOrder = game.getSortedPlayers();
-    final max = game.getCurrentCardMax();
-
-    final bets = RoundData.fromIterable(playerOrder, value: (player) {
-      stdout.write("$player bet [0-$max]: ");
-      return int.parse(stdin.readLineSync()!);
-    });
-
-    game.setBets(bets);
-
-    game.setWins(RoundData.fromIterable(playerOrder, value: (player) {
-      stdout.write("$player bet=${bets[player]}, wins [0-$max]: ");
-      return int.parse(stdin.readLineSync()!);
-    }));
-
-    print(game.getCurrentScores().toString());
+    return lastScores!;
   }
 }

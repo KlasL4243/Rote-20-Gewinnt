@@ -2,7 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:rote20_gewinnt/data/manager/manager.dart';
-import 'package:rote20_gewinnt/presentation/home/nothing_here.dart';
+import 'package:rote20_gewinnt/presentation/bets/bets.dart';
 
 const textScaler = TextScaler.linear(2);
 
@@ -21,11 +21,11 @@ class _NamesState extends State<Names> {
 
   @override
   Widget build(BuildContext context) {
-    void goToSettings() {
+    void goToBets() {
       Navigator.of(context).push(
         MaterialPageRoute(
           builder: (context) {
-            return const NothingHere();
+            return const Bets();
           },
         ),
       );
@@ -39,7 +39,9 @@ class _NamesState extends State<Names> {
       if (!state.validate()) return;
 
       Manager.game.players.removeWhere((element) => element == "-");
-      goToSettings();
+      Manager.game.setCardCounts();
+      Manager.game.goNextRound();
+      goToBets();
     }
 
     return Scaffold(

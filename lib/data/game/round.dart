@@ -7,7 +7,13 @@ typedef RoundData = Map<String, int>;
 
 @JsonSerializable()
 class Round {
-  Round();
+  Round({
+    required this.bets,
+    required this.wins,
+    required this.scores,
+  });
+
+  Round.empty();
 
   late RoundData bets;
   late RoundData wins;

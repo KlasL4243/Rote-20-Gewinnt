@@ -22,17 +22,21 @@ abstract class GameBase {
   List<String> players = [];
 
   List<Round> data = [];
-  int currentRound = -1;
+  int currentIndex = -1;
   late List<String> sortedPlayers;
   late List<int> cardCounts;
+
+  late RoundData currentBets;
+  late RoundData currentWins;
+  RoundData? lastScores;
 
   bool goNextRound();
 
   int getCurrentCardMax();
   List<String> getSortedPlayers();
 
-  void setBets(RoundData bets);
-  void setWins(RoundData wins);
+  void setBet(String player, int bet);
+  void setWin(String player, int wins);
 
   RoundData getCurrentScores();
 }

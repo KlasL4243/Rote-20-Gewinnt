@@ -4,14 +4,12 @@ import 'package:flutter/services.dart';
 class NumberFormField extends StatelessWidget {
   const NumberFormField({
     super.key,
-    required this.labelText,
     required this.onSaved,
     this.initialValue,
     this.validator,
     this.inputFormatters,
   });
 
-  final String labelText;
   final String? initialValue;
   final void Function(String?) onSaved;
   final FormFieldValidator<String>? validator;
