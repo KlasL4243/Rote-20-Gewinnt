@@ -1,6 +1,7 @@
 // ignore_for_file: avoid_print
 
 import 'package:rote20_gewinnt/data/game/round.dart';
+import 'package:rote20_gewinnt/data/game/player_position.dart';
 
 abstract class GameBase {
   GameBase({
@@ -29,6 +30,7 @@ abstract class GameBase {
   late RoundData currentBets;
   late RoundData currentWins;
   RoundData? lastScores;
+  List<PlayerPosition> sortedScores = [];
 
   bool goNextRound();
 
@@ -39,5 +41,5 @@ abstract class GameBase {
   void setWin(String player, int wins);
 
   void calculateScores();
-  List<MapEntry<String, int>> getSortedScores();
+  List<PlayerPosition> getSortedScores();
 }

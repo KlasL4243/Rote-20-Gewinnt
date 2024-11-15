@@ -4,6 +4,7 @@ import 'package:json_annotation/json_annotation.dart';
 import 'package:rote20_gewinnt/data/game/game_base.dart';
 import 'package:rote20_gewinnt/data/game/round.dart';
 import 'package:rote20_gewinnt/data/json_map.dart';
+import 'package:rote20_gewinnt/data/game/player_position.dart';
 
 part 'game.g.dart';
 
@@ -41,6 +42,7 @@ class Game extends GameBase {
     currentIndex++;
     currentBets = RoundData();
     currentWins = RoundData();
+    sortedScores = [];
 
     return true;
   }
@@ -81,9 +83,25 @@ class Game extends GameBase {
   }
 
   @override
-  List<MapEntry<String, int>> getSortedScores() {
+  List<PlayerPosition> getSortedScores() {
+    if (sortedScores.isNotEmpty) return sortedScores;
+
     final scoreEntrieList = lastScores!.entries.toList();
     scoreEntrieList.sort((a, b) => b.value.compareTo(a.value));
-    return scoreEntrieList;
+
+    int position = 1;
+    int score = scoreEntrieList.first.value;
+
+    for (MapEntry mapEntry in scoreEntrieList) {
+      if (mapEntry.value != score) position++;
+
+      sortedScores.add(PlayerPosition(
+        player: mapEntry.key,
+        score: mapEntry.value,
+        position: position,
+      ));
+    }
+
+    return sortedScores;
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:rote20_gewinnt/data/manager/manager.dart';
 import 'package:rote20_gewinnt/main.dart';
 import 'package:rote20_gewinnt/presentation/bets/validators.dart';
@@ -35,6 +36,11 @@ class _WinsState extends State<Wins> {
 
   @override
   Widget build(BuildContext context) {
+    List<TextInputFormatter> getFormatters() => [
+          LengthLimitingTextInputFormatter(maxCards > 9 ? 2 : 1),
+          FilteringTextInputFormatter.allow(RegExp('[0-$maxCards]'))
+        ];
+
     return Scaffold(
       appBar: AppBar(
         title: Text("Wins - $maxCards Karten"),
@@ -53,9 +59,10 @@ class _WinsState extends State<Wins> {
                   text: player,
                   formField: NumberFormField(
                     onSaved: (wins) =>
-                        Manager.game.currentWins[player] = int.parse(wins!),
+                        Manager.game.setWin(player, int.parse(wins!)),
                     validator: (String? wins) =>
                         betValidator(wins, player, maxCards),
+                    inputFormatters: getFormatters(),
                   ),
                 )
             ],

@@ -12,7 +12,7 @@ class Manager {
   }
 
   static List<String> getSavedGameNames() => List.from(_box.keys);
-  
+
   static void newGame() => game = Game.empty();
   static Game loadGame(String name) => (game = _box.get(name)!);
   static Future<void> saveGame() async => await _box.put(game.name, game);

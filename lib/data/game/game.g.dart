@@ -29,7 +29,10 @@ Game _$GameFromJson(Map<String, dynamic> json) => Game(
       ..currentWins = Map<String, int>.from(json['currentWins'] as Map)
       ..lastScores = (json['lastScores'] as Map<String, dynamic>?)?.map(
         (k, e) => MapEntry(k, (e as num).toInt()),
-      );
+      )
+      ..sortedScores = (json['sortedScores'] as List<dynamic>)
+          .map((e) => PlayerPosition.fromJson(e as Map<String, dynamic>))
+          .toList();
 
 Map<String, dynamic> _$GameToJson(Game instance) => <String, dynamic>{
       'name': instance.name,
@@ -45,4 +48,5 @@ Map<String, dynamic> _$GameToJson(Game instance) => <String, dynamic>{
       'currentBets': instance.currentBets,
       'currentWins': instance.currentWins,
       'lastScores': instance.lastScores,
+      'sortedScores': instance.sortedScores.map((e) => e.toJson()).toList(),
     };

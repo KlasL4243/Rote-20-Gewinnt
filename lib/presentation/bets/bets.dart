@@ -55,7 +55,7 @@ class _BetsState extends State<Bets> {
                   text: player,
                   formField: NumberFormField(
                     onSaved: (bet) =>
-                        Manager.game.currentBets[player] = int.parse(bet!),
+                        Manager.game.setBet(player, int.parse(bet!)),
                     validator: (String? bet) =>
                         betValidator(bet, player, maxCards),
                     inputFormatters: getFormatters(),
