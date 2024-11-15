@@ -2,7 +2,8 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:rote20_gewinnt/data/manager/manager.dart';
-import 'package:rote20_gewinnt/presentation/bets/bets.dart';
+import 'package:rote20_gewinnt/main.dart';
+import 'package:rote20_gewinnt/presentation/home/goto.dart';
 
 const textScaler = TextScaler.linear(2);
 
@@ -21,16 +22,6 @@ class _NamesState extends State<Names> {
 
   @override
   Widget build(BuildContext context) {
-    void goToBets() {
-      Navigator.of(context).push(
-        MaterialPageRoute(
-          builder: (context) {
-            return const Bets();
-          },
-        ),
-      );
-    }
-
     void validateAndSaveForm() {
       Manager.game.players = List.generate(Names.playerCount, (_) => "-");
       final FormState state = _formKey.currentState!;
@@ -41,7 +32,7 @@ class _NamesState extends State<Names> {
       Manager.game.players.removeWhere((element) => element == "-");
       Manager.game.setCardCounts();
       Manager.game.goNextRound();
-      goToBets();
+      goto(context, Routes.bets);
     }
 
     return Scaffold(

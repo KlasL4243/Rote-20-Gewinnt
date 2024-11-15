@@ -68,7 +68,7 @@ class Game extends GameBase {
   }
 
   @override
-  RoundData getCurrentScores() {
+  void calculateScores() {
     int calculateScore(player) {
       final bet = currentBets[player]!;
       final wins = currentWins[player]!;
@@ -78,7 +78,12 @@ class Game extends GameBase {
 
     lastScores = RoundData.fromIterable(sortedPlayers, value: calculateScore);
     data.add(Round(bets: currentBets, wins: currentWins, scores: lastScores!));
+  }
 
-    return lastScores!;
+  @override
+  List<MapEntry<String, int>> getSortedScores() {
+    final scoreEntrieList = lastScores!.entries.toList();
+    scoreEntrieList.sort((a, b) => b.value.compareTo(a.value));
+    return scoreEntrieList;
   }
 }

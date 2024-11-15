@@ -4,11 +4,12 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:rote20_gewinnt/data/game/game.dart';
 import 'package:rote20_gewinnt/data/manager/manager.dart';
-import 'package:rote20_gewinnt/presentation/names/names.dart';
+import 'package:rote20_gewinnt/main.dart';
+import 'package:rote20_gewinnt/presentation/home/goto.dart';
 import 'package:rote20_gewinnt/presentation/settings/number_form_field.dart';
 import 'package:rote20_gewinnt/presentation/settings/entry_row.dart';
+import 'package:rote20_gewinnt/presentation/settings/weiter_fab.dart';
 
 String? intValidator(String? value) {
   final zahl = int.tryParse(value!);
@@ -27,11 +28,7 @@ String getUnusedGameName() {
 }
 
 class Settings extends StatefulWidget {
-  Settings({super.key}) {
-    init();
-  }
-
-  void init() => Manager.game = Game.empty();
+  const Settings({super.key});
 
   @override
   State<Settings> createState() => _SettingsState();
@@ -42,23 +39,11 @@ class _SettingsState extends State<Settings> {
 
   @override
   Widget build(BuildContext context) {
-    void goToNames() {
-      Navigator.of(context).push(
-        MaterialPageRoute(
-          builder: (context) {
-            return const Names();
-          },
-        ),
-      );
-    }
-
     return Scaffold(
       appBar: AppBar(
         title: const Text("Einstellungen"),
       ),
-      floatingActionButton: FloatingActionButton.extended(
-        label: Text("Weiter"),
-        backgroundColor: Colors.lightBlue,
+      floatingActionButton: WeiterFab(
         onPressed: () {
           final state = _formKey.currentState!;
           if (!state.validate()) {
@@ -68,9 +53,8 @@ class _SettingsState extends State<Settings> {
 
           state.save();
           log("SettingsForm saved!");
-          goToNames();
+          goto(context, Routes.names);
         },
-        icon: const Icon(Icons.arrow_forward),
       ),
       body: Form(
         key: _formKey,

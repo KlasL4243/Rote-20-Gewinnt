@@ -38,5 +38,6 @@ abstract class GameBase {
   void setBet(String player, int bet);
   void setWin(String player, int wins);
 
-  RoundData getCurrentScores();
+  void calculateScores();
+  List<MapEntry<String, int>> getSortedScores();
 }

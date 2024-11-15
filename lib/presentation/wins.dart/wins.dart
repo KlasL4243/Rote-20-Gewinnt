@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:rote20_gewinnt/data/manager/manager.dart';
 import 'package:rote20_gewinnt/main.dart';
 import 'package:rote20_gewinnt/presentation/bets/validators.dart';
@@ -7,39 +6,38 @@ import 'package:rote20_gewinnt/presentation/home/goto.dart';
 import 'package:rote20_gewinnt/presentation/settings/entry_row.dart';
 import 'package:rote20_gewinnt/presentation/settings/number_form_field.dart';
 import 'package:rote20_gewinnt/presentation/settings/weiter_fab.dart';
+import 'package:collection/collection.dart';
 
-class Bets extends StatefulWidget {
-  const Bets({super.key});
+class Wins extends StatefulWidget {
+  const Wins({super.key});
 
   @override
-  State<Bets> createState() => _BetsState();
+  State<Wins> createState() => _WinsState();
 }
 
-class _BetsState extends State<Bets> {
-  final int maxCards = Manager.game.getCurrentCardMax();
+class _WinsState extends State<Wins> {
+  final maxCards = Manager.game.getCurrentCardMax();
   final orderedPlayers = Manager.game.getSortedPlayers();
-  final int playercount = Manager.game.sortedPlayers.length;
   final _formKey = GlobalKey<FormState>();
+
+  void validateAndSaveForm() {
+    final FormState state = _formKey.currentState!;
+    state.save();
+
+    final winsSum = Manager.game.currentWins.values.sum;
+
+    if (!state.validate()) return;
+    if (winsSum != maxCards) return;
+
+    Manager.game.calculateScores();
+    goto(context, Routes.scores);
+  }
 
   @override
   Widget build(BuildContext context) {
-    void validateAndSaveForm() {
-      final FormState state = _formKey.currentState!;
-      state.save();
-
-      if (!state.validate()) return;
-
-      goto(context, Routes.wins);
-    }
-
-    List<TextInputFormatter> getFormatters() => [
-          LengthLimitingTextInputFormatter(maxCards > 9 ? 2 : 1),
-          FilteringTextInputFormatter.allow(RegExp('[0-$maxCards]'))
-        ];
-
     return Scaffold(
       appBar: AppBar(
-        title: Text("Bets - $maxCards Karten"),
+        title: Text("Wins - $maxCards Karten"),
       ),
       floatingActionButton: WeiterFab(
         onPressed: validateAndSaveForm,
@@ -54,11 +52,10 @@ class _BetsState extends State<Bets> {
                 EntryRow(
                   text: player,
                   formField: NumberFormField(
-                    onSaved: (bet) =>
-                        Manager.game.currentBets[player] = int.parse(bet!),
-                    validator: (String? bet) =>
-                        betValidator(bet, player, maxCards),
-                    inputFormatters: getFormatters(),
+                    onSaved: (wins) =>
+                        Manager.game.currentWins[player] = int.parse(wins!),
+                    validator: (String? wins) =>
+                        betValidator(wins, player, maxCards),
                   ),
                 )
             ],

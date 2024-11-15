@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:rote20_gewinnt/presentation/settings/settings.dart';
+import 'package:rote20_gewinnt/data/manager/manager.dart';
+import 'package:rote20_gewinnt/main.dart';
+import 'package:rote20_gewinnt/presentation/home/goto.dart';
 import 'package:rote20_gewinnt/presentation/home/home_card.dart';
 
 class Home extends StatelessWidget {
@@ -18,9 +20,11 @@ class Home extends StatelessWidget {
           child: Column(
             children: [
               HomeCard(
-                text: "Neues Spiel",
-                widget: () => Settings(),
-              ),
+                  text: "Neues Spiel",
+                  onTap: () {
+                    Manager.newGame();
+                    goto(context, Routes.settings);
+                  }),
               const HomeCard(
                 text: "Spielverlauf",
               ),
