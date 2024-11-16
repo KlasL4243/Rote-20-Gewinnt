@@ -14,7 +14,7 @@ class BetRow extends StatefulWidget {
 }
 
 class _BetRowState extends State<BetRow> {
-  final int playercount = Manager.game.sortedPlayers.length;
+  final int playercount = Manager.game.getPlayerOrder().length;
   late final WheelPickerController _controller = WheelPickerController(
     itemCount: Manager.game.getCardMax(),
   );

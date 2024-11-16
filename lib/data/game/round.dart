@@ -1,5 +1,3 @@
-import 'dart:collection';
-
 import 'package:json_annotation/json_annotation.dart';
 import 'package:rote20_gewinnt/data/game/round_data.dart';
 import 'package:rote20_gewinnt/data/json_map.dart';
