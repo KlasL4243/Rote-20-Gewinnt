@@ -1,45 +1,37 @@
 // ignore_for_file: avoid_print
 
+import 'package:flutter/foundation.dart';
 import 'package:rote20_gewinnt/data/game/round.dart';
-import 'package:rote20_gewinnt/data/game/player_position.dart';
+import 'package:rote20_gewinnt/data/game/round_data.dart';
 
 abstract class GameBase {
-  GameBase({
-    required this.name,
-    required this.maxCards,
-    required this.onWin,
-    required this.onLoose,
-    required this.onRoundWin,
-    required this.players,
-  });
-
-  GameBase.empty();
-
-  late String name;
-  late int maxCards; // default: 7
-  late int onWin; // default: 10
-  late int onLoose; // default: -5
-  late int onRoundWin; // default: 1
+  String name = "";
+  int maxCards = 7;
+  int onWin = 10;
+  int onLoose = -5;
+  int onRoundWin = 1;
   List<String> players = [];
 
-  List<Round> data = [];
-  int currentIndex = -1;
-  late List<String> sortedPlayers;
+  @protected
   late List<int> cardCounts;
 
-  late RoundData currentBets;
-  late RoundData currentWins;
-  RoundData? lastScores;
-  List<PlayerPosition> sortedScores = [];
+  @protected
+  List<Round> data = [];
+  @protected
+  int currentIndex = -1;
 
+  @protected
+  late List<String> sortedPlayers;
+
+  void initGame();
   bool goNextRound();
 
-  int getCurrentCardMax();
-  List<String> getSortedPlayers();
+  int getCardMax();
+  List<String> getPlayerOrder();
 
   void setBet(String player, int bet);
   void setWin(String player, int wins);
 
-  void calculateScores();
-  List<PlayerPosition> getSortedScores();
+  bool validateWinCount();
+  RoundData getScores();
 }

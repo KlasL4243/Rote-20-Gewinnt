@@ -16,8 +16,8 @@ class Bets extends StatefulWidget {
 }
 
 class _BetsState extends State<Bets> {
-  final int maxCards = Manager.game.getCurrentCardMax();
-  final orderedPlayers = Manager.game.getSortedPlayers();
+  final int maxCards = Manager.game.getCardMax();
+  final orderedPlayers = Manager.game.getPlayerOrder();
   final int playercount = Manager.game.sortedPlayers.length;
   final _formKey = GlobalKey<FormState>();
 

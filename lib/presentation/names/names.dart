@@ -30,8 +30,7 @@ class _NamesState extends State<Names> {
       if (!state.validate()) return;
 
       Manager.game.players.removeWhere((element) => element == "-");
-      Manager.game.setCardCounts();
-      Manager.game.goNextRound();
+      Manager.game.initGame();
       goto(context, Routes.bets);
     }
 
@@ -71,9 +70,7 @@ TextFormField nameFormField(int index) {
       hintText: "Spieler ${index + 1}",
     ),
     initialValue: Manager.game.players.elementAtOrNull(index),
-    textInputAction: index == (Names.playerCount - 1)
-        ? TextInputAction.done
-        : TextInputAction.next,
+    textInputAction: TextInputAction.next,
     onSaved: (String? value) {
       if (value!.isEmpty) return;
       Manager.game.players[index] = value;

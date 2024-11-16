@@ -1,107 +1,91 @@
 // ignore_for_file: avoid_print
 
+import 'package:collection/collection.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:rote20_gewinnt/data/game/game_base.dart';
 import 'package:rote20_gewinnt/data/game/round.dart';
+import 'package:rote20_gewinnt/data/game/round_data.dart';
 import 'package:rote20_gewinnt/data/json_map.dart';
-import 'package:rote20_gewinnt/data/game/player_position.dart';
 
 part 'game.g.dart';
 
+typedef DataEntry = MapEntry<String, int>;
+
 @JsonSerializable(explicitToJson: true)
 class Game extends GameBase {
-  Game({
-    required super.name,
-    required super.maxCards,
-    required super.onWin,
-    required super.onLoose,
-    required super.onRoundWin,
-    required super.players,
-  }) {
-    setCardCounts();
-  }
-
-  Game.empty() : super.empty();
+  Game();
 
   factory Game.fromJson(JsonMap json) => _$GameFromJson(json);
   JsonMap toJson() => _$GameToJson(this);
 
-  void setCardCounts() {
+  @override
+  void initGame() {
     cardCounts = [
       for (int i = 1; i < maxCards; i++) i,
       for (int i = maxCards; i >= 1; i--) i,
     ];
+    goNextRound();
   }
-
-  @override
-  int getCurrentCardMax() => cardCounts[currentIndex];
 
   @override
   bool goNextRound() {
     if (currentIndex == cardCounts.length) return false;
+
     currentIndex++;
-    currentBets = RoundData();
-    currentWins = RoundData();
-    sortedScores = [];
 
-    return true;
-  }
+    data.add(Round());
 
-  @override
-  List<String> getSortedPlayers() {
     final shiftIndex = (currentIndex) % players.length;
-
     sortedPlayers = [
       ...players.skip(shiftIndex),
       ...players.take(shiftIndex),
     ];
 
-    return sortedPlayers;
+    return true;
   }
 
   @override
+  int getCardMax() => cardCounts[currentIndex];
+
+  @override
+  List<String> getPlayerOrder() => sortedPlayers;
+
+  @override
   void setBet(String player, int bet) {
-    currentBets[player] = bet;
+    data[currentIndex].bets[player] = bet;
   }
 
   @override
   void setWin(String player, int wins) {
-    currentWins[player] = wins;
+    data[currentIndex].wins[player] = wins;
   }
 
   @override
-  void calculateScores() {
-    int calculateScore(player) {
-      final bet = currentBets[player]!;
-      final wins = currentWins[player]!;
-      final lastScore = lastScores?[player] ?? 0;
-      return lastScore + wins + (bet == wins ? onWin : onLoose);
-    }
-
-    lastScores = RoundData.fromIterable(sortedPlayers, value: calculateScore);
-    data.add(Round(bets: currentBets, wins: currentWins, scores: lastScores!));
+  bool validateWinCount() {
+    return data[currentIndex].wins.values.sum == getCardMax();
   }
 
   @override
-  List<PlayerPosition> getSortedScores() {
-    if (sortedScores.isNotEmpty) return sortedScores;
+  RoundData getScores() {
+    final currentRound = data[currentIndex];
 
-    final scoreEntrieList = lastScores!.entries.toList();
-    scoreEntrieList.sort((a, b) => b.value.compareTo(a.value));
+    RoundData scores = currentRound.scores;
+    if (scores.isNotEmpty) return scores;
 
-    int position = 1;
-    int score = scoreEntrieList.first.value;
+    final lastScores = currentIndex == 0 ? null : data[currentIndex - 1].scores;
 
-    for (MapEntry mapEntry in scoreEntrieList) {
-      if (mapEntry.value != score) position++;
-
-      sortedScores.add(PlayerPosition(
-        player: mapEntry.key,
-        score: mapEntry.value,
-        position: position,
-      ));
+    DataEntry calcScore(String player) {
+      final wins = currentRound.bets[player]!;
+      final bet = currentRound.wins[player]!;
+      final lastScore = lastScores?[player]! ?? 0;
+      final score = lastScore + wins + (bet == wins ? onWin : onLoose);
+      return MapEntry(player, score);
     }
 
-    return sortedScores;
+    final List<DataEntry> entrieList = List.from(players.map(calcScore));
+    entrieList.sort((a, b) => b.value.compareTo(a.value));
+    scores = RoundData.fromEntries(entrieList);
+
+    return scores;
   }
 }

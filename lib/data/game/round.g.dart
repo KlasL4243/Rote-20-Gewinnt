@@ -6,14 +6,16 @@ part of 'round.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-Round _$RoundFromJson(Map<String, dynamic> json) => Round(
-      bets: Map<String, int>.from(json['bets'] as Map),
-      wins: Map<String, int>.from(json['wins'] as Map),
-      scores: Map<String, int>.from(json['scores'] as Map),
-    );
+Round _$RoundFromJson(Map<String, dynamic> json) => Round()
+  ..bets =
+      const RoundDataConvertor().fromJson(json['bets'] as Map<String, dynamic>)
+  ..wins =
+      const RoundDataConvertor().fromJson(json['wins'] as Map<String, dynamic>)
+  ..scores = const RoundDataConvertor()
+      .fromJson(json['scores'] as Map<String, dynamic>);
 
 Map<String, dynamic> _$RoundToJson(Round instance) => <String, dynamic>{
-      'bets': instance.bets,
-      'wins': instance.wins,
-      'scores': instance.scores,
+      'bets': const RoundDataConvertor().toJson(instance.bets),
+      'wins': const RoundDataConvertor().toJson(instance.wins),
+      'scores': const RoundDataConvertor().toJson(instance.scores),
     };

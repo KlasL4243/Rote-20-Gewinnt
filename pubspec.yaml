@@ -17,6 +17,8 @@ dependencies:
   wheel_picker: ^0.1.1
   collection: ^1.18.0
 
+  sortedmap: ^0.5.4
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

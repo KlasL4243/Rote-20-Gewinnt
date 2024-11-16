@@ -24,6 +24,7 @@ class NumberFormField extends StatelessWidget {
         ),
       ),
       keyboardType: TextInputType.number,
+      textInputAction: TextInputAction.next,
       inputFormatters: inputFormatters,
       initialValue: initialValue,
       onSaved: onSaved,
