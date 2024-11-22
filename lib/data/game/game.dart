@@ -85,6 +85,7 @@ class Game extends GameBase {
     final List<DataEntry> entrieList = List.from(players.map(calcScore));
     entrieList.sort((a, b) => b.value.compareTo(a.value));
     scores = RoundData.fromEntries(entrieList);
+    data[currentIndex].scores = scores;
 
     return scores;
   }
