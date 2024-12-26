@@ -40,6 +40,7 @@ class _BetsState extends State<Bets> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Bets - $maxCards Karten"),
+        automaticallyImplyLeading: false,
       ),
       floatingActionButton: WeiterFab(
         onPressed: validateAndSaveForm,
